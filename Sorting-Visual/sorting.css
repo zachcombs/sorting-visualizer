@@ -4,15 +4,11 @@ body {
 }
 
 .header {
-    padding: 20px;
+    padding: 10px;
     text-align: left;
-    background: #65686e;
+    background: #121a2b;
     color: white;
     font-size: 15px;
-}
-
-.content {
-    padding:20px;
 }
 
 .button {
@@ -20,13 +16,74 @@ body {
     background-repeat: no-repeat;
     overflow: hidden;
     border: none;
-    color: black;
-    padding: 15px 32px;
+    color: rgb(255, 255, 255);
+    padding: 5px 8px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin: 4px 2px;
+    margin: 2px 1px;
     cursor: pointer;
     outline: none;
+}
+
+.arraySize {
+    margin: auto;
+    margin-left: 10px;
+    margin-right: 10px ;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.slidecontainer {
+    width: 5%; /* Width of the outside container */
+}
+
+.slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 10%; /* Full-width */
+    height: 15px; /* Specified height */
+    background: #d3d3d3; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+    display: inline-block;
+  }
+  
+  /* Mouse-over effects */
+  .slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+  }
+  
+  /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: rgb(255, 255, 255); /* Green background */
+    cursor: pointer; /* Cursor on hover */
+  }
+  
+  .slider::-moz-range-thumb {
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: rgb(255, 255, 255); /* Green background */
+    cursor: pointer; /* Cursor on hover */
+  }
+
+  .arrayDiv {
+      margin-left: 2px;
+      display: inline-block;
+      text-align: center;
+  }
+
+  .content {
+    position: absolute;
+    transform: rotateX(180deg);
+    text-align: center;
+    display: inline-block;
+    top: 48px;
   }
