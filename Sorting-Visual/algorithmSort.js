@@ -36,8 +36,8 @@ async function drawDivVisualizer(divArr, current, smallest, divwidth) {
     //Before current
     for(i = 0; i < current; i++) {
         var div = document.createElement("div");
-        div.style.width = divwidth.toString() + "px";
-        div.style.height= arr[i].toString() + "px";
+        div.style.width = divwidth + "px";
+        div.style.height= arr[i] + "px";
         div.style.backgroundColor = "#098f35";
         div.style.color = "white";
         div.className = "arrayDiv";
@@ -46,42 +46,46 @@ async function drawDivVisualizer(divArr, current, smallest, divwidth) {
     }
     //Current
     var div = document.createElement("div");
-    div.style.width = divwidth.toString() + "px";
-    div.style.height= arr[current].toString() + "px";
+    div.style.width = divwidth + "px";
+    div.style.height= arr[current] + "px";
     div.style.backgroundColor = "#6769bf";
     div.style.color = "white";
     div.className = "arrayDiv";
-    div.id = current.toString();
+    div.id = current;
     document.getElementById("main").appendChild(div);
     //Inbetween current and smallest
     for(i = current + 1; i < smallest; i++) {
         var div = document.createElement("div");
-        div.style.width = divwidth.toString() + "px";
-        div.style.height= arr[i].toString() + "px";
+        div.style.width = divwidth + "px";
+        div.style.height= arr[i] + "px";
         div.style.backgroundColor = "#303a42";
         div.style.color = "white";
         div.className = "arrayDiv";
-        div.id = i.toString();
+        div.id = i;
         document.getElementById("main").appendChild(div);
     }
     //Smallest
     var div = document.createElement("div");
-    div.style.width = divwidth.toString() + "px";
-    div.style.height= arr[smallest].toString() + "px";
+    div.style.width = divwidth + "px";
+    div.style.height= arr[smallest] + "px";
     div.style.backgroundColor = "#f22929";
     div.style.color = "white";
     div.className = "arrayDiv";
-    div.id = smallest.toString();
+    div.id = smallest;
     document.getElementById("main").appendChild(div);
-    for(i = smallest + 1; i < divArr.length - 1; i++) {
-        var div = document.createElement("div");
-        div.style.width = divwidth.toString() + "px";
-        div.style.height= arr[i].toString() + "px";
-        div.style.backgroundColor = "#303a42";
-        div.style.color = "white";
-        div.className = "arrayDiv";
-        div.id = i.toString();
-        document.getElementById("main").appendChild(div);
+    try {
+        for(i = smallest + 1; i < divArr.length - 1; i++) {
+            var div = document.createElement("div");
+            div.style.width = divwidth + "px";
+            div.style.height= arr[i] + "px";
+            div.style.backgroundColor = "#303a42";
+            div.style.color = "white";
+            div.className = "arrayDiv";
+            div.id = i;
+            document.getElementById("main").appendChild(div);
+        }
+    } catch {
+
     }
 }
 
