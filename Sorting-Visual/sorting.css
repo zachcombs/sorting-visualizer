@@ -75,15 +75,21 @@ body {
   }
 
   .arrayDiv {
-      margin-left: 2px;
+      position: relative;
+      outline-style: solid;
+      outline-width: 1px;
+      outline-color: black;
       display: inline-block;
       text-align: center;
   }
 
   .content {
     position: absolute;
+    margin-left: auto;
+    margin-right: auto;
     transform: rotateX(180deg);
     text-align: center;
     display: inline-block;
     top: 48px;
+    overflow: hidden;
   }
