@@ -5,10 +5,25 @@ var sorted = [];
 var unsortedArray;
 
 function arraySize() {
+    var spaceOffset;
     var x = document.getElementById("myRange").value;
     arr = Array.from({length: x}, () => Math.floor(Math.random() * $(window).height() * 0.85));
-    this.divWidth = $(window).width() / x;
+    var arraySize = arr.length;
+    this.divWidth = ($(window).width() * 0.99) / x;
     unsortedArray = arr;
+    // if(arr.length -1 < 10) {
+    //     spaceOffset = 3;
+    // } else if(arr.length -1 < 99) {
+    //     spaceOffset = 2;
+    // } else if(arr.length -1 < 999) {
+    //     spaceOffset = 1;
+    // } else {
+    //     spaceOffset = 0;
+    // }
+    // for(var g = 0; g < spaceOffset; g++) {
+    //     arraySize = arraySize + "     ";
+    // }
+    document.getElementById("arrayCounter").textContent = arraySize;
     drawDiv(arr, '#303a42', this.divWidth);
 }
 
@@ -214,9 +229,7 @@ function resolveAfter2SecondsBubble(bubSorted, current, smallest, divWidth) {
 //Merge code pulled from https://medium.com/techtrument/implementing-merge-sort-in-javascript-898d5f54a234
 
 function merge(leftArr, rightArr) {
-    //DRAW THE VISUAL FROM THESE VARIABLES
-    console.log(leftArr)
-    console.log(rightArr)
+    var temp;
     var sortedArr = [];
     while (leftArr.length && rightArr.length) {
         if (leftArr[0] <= rightArr[0]) {
@@ -231,8 +244,21 @@ function merge(leftArr, rightArr) {
         sortedArr.push(leftArr.shift());
     while (rightArr.length)
         sortedArr.push(rightArr.shift());
-    console.log(sortedArr);
+    console.log(sortedArr.toString())
+    for(var i = 0; i < sortedArr.length - 1; i++) {
+        for(var j = 0; j < sortedArr.length; j++) {
+            if(sortedArr[i] >= sortedArr[j]) {
+                temp = this.arr.find(element => (element >= sortedArr[i] && element <= sortedArr[i]));
+                this.arr[this.arr.findIndex(element => (element >= sortedArr[i] && element <= sortedArr[i]))] = this.arr.find(element => (element >= sortedArr[i] && element <= sortedArr[i]));
+                this.arr[this.arr.findIndex(element => (element >= sortedArr[i] && element <= sortedArr[j]))] = temp;
+            }
+        }
+   }
     return sortedArr;
+}
+
+function checkForIndex(arrayToSearch, whatToSearch) {
+    return arrayToSearch >= whatToSearch && arrayToSearch <= whatToSearch;
 }
 
 function mergeSort(mergeArr) {
@@ -245,6 +271,7 @@ function mergeSort(mergeArr) {
         var midpoint = parseInt(mergeArr.length / 2);
         var leftArr   = mergeArr.slice(0, midpoint);
         var rightArr  = mergeArr.slice(midpoint, mergeArr.length);
+        //console.log(leftArr +" | " + rightArr);
         //drawMergeSort(mergeArr);
         //const result = await resolveMerge();
         
@@ -252,55 +279,140 @@ function mergeSort(mergeArr) {
     }
 }
 
-function resolveMerge(mergeSorted, current) {
+function resolveMerge(sortedArr, current) {
     return new Promise((resolve) => {
       setTimeout(() => {
-        drawMergeSort(mergeSorted, current);
+        drawMergeSort(sortedArr, current);
         resolve('resolved');
       }, (1 / this.speed) * 100);
     });
 }
 
-function drawMergeSort(mergeSorted, current) {
+function drawMergeSort(sortedArr, left, right) {
+    var temp;
+    /*
+    249,267,85,99,93,63,211,23,334,4,292,265
+    85,267
+    85,249,267
+    63,93
+    63,93,99
+    63,85,93,99,249,267
+    23,334
+    23,211,334
+    265,292
+    4,265,292
+    4,23,211,265,292,334
+    4,23,63,85,93,99,211,249,265,267,292,334
+    
+    249,85*,267*,99,93,63,211,23,334,4,292,265
+    85*,249*,267,99,93,63,211,23,334,4,292,265
+    85,249,267,99,63*,93*,211,23,334,4,292,265
+    85,249,267,63*,99*,93,211,23,334,4,292,265
+    85,249,267,63,93*,99*,211,23,334,4,292,265
+    63*,249,267,85*,93,99,211,23,334,4,292,265
+    63,85*,267,249*,93,99,211,23,334,4,292,265
+    63,85,93*,249,267*,99,211,23,334,4,292,265
+    63,85,93,99*,267,249*,211,23,334,4,292,265
+    63,85,93,99,249*,267*,211,23,334,4,292,265
+    
+    63,85,93,99,249,267,211,23*,334*,4,292,265
+    63,85,93,99,249,267,23*,211*,334,4,292,265
+    63,85,93,99,249,267,23,211,334,4,265*,292*
+    63,85,93,99,249,267,4*,211,334,23*,265,292
+    63,85,93,99,249,267,4,23*,334,211*,265,292
+    63,85,93,99,249,267,4,23,211*,334*,265,292
+    63,85,93,99,249,267,4,23,211,265*,334*,292
+    63,85,93,99,249,267,4,23,211,265,292*,334*
+
+    4*,85,93,99,249,267,63*,23,211,265,292,334
+    4,23*,93,99,249,267,65,85*,211,265,292,334
+    4,23,65*,99,249,267,93*,85,211,265,292,334
+    4,23,65,85*,249,267,93,99*,211,265,292,334
+    4,23,65,85,93*,267,249*,99,211,265,292,334
+    4,23,65,85,93,99*,249,267*,211,265,292,334
+    4,23,65,85,93,99,211*,267,249*,265,292,334
+    4,23,65,85,93,99,211,249*,267*,265,292,334
+    4,23,65,85,93,99,211,249,265*,267*,292,334
+    
+    find 85 and 267
+    if index of 85 > index of 267, swap
+    find 85, 249, and 267
+    
+    */
     $("div.arrayDiv").remove();
-    //Before current
-    for(i = 0; i < current; i++) {
+    for(var i = 0; i < sortedArr.length - 1; i++) {
+        for(var j = 0; j < sortedArr.length; j++) {
+            if(sortedArr[i] >= sortedArr[j]) {
+                temp = arr.find(sortedArr[i]);
+                arr[arr.findIndex(sortedArr[i])] = arr.find(sortedArr[j]);
+                arr[arr.findIndex(sortedArr[j])] = temp;
+            }
+        }
+   }
+}
+
+//INSERTION SORT STARTS HERE
+
+async function insertionSort() {
+    var insertionSorted = arr;
+    var insertCurr;
+    var temp;
+    for(var i = 1; i < insertionSorted.length; i++) {
+        insertCurr = i;
+        for(var j = i - 1; j >= 0; j--) {
+            if(insertionSorted[insertCurr] < insertionSorted[j]) {
+                temp = insertionSorted[insertCurr];
+                insertionSorted[insertCurr] = insertionSorted[j];
+                insertionSorted[j] = temp;
+                drawInsertionSort(insertionSorted, j, insertCurr);
+                const result = await insertionResolve();
+            }
+            insertCurr--;
+        }
+    }
+    drawDiv(insertionSorted, "#098f35", divWidth);
+}
+
+async function drawInsertionSort(insertArr, left, right) {
+    $("div.arrayDiv").remove();
+    //Before left
+    for(i = 0; i < left; i++) {
         var div = document.createElement("div");
-        div.style.width = divWidth + "px";
-        div.style.height= arr[i] + "px";
+        div.style.width = this.divWidth + "px";
+        div.style.height= insertArr[i] + "px";
         div.style.backgroundColor = "#303a42";
         div.style.color = "white";
         div.className = "arrayDiv";
         div.id = i;
         document.getElementById("main").appendChild(div);
     }
-    //Current
+    //Left
     var div = document.createElement("div");
-    div.style.width = divWidth + "px";
-    div.style.height= arr[current] + "px";
+    div.style.width = this.divWidth + "px";
+    div.style.height= insertArr[left] + "px";
     div.style.backgroundColor = "#f22929";
     div.style.color = "white";
     div.className = "arrayDiv";
-    div.id = current;
+    div.id = left;
     document.getElementById("main").appendChild(div);
-    //Next
+    //Right
     var div = document.createElement("div");
-    div.style.width = divWidth + "px";
-    div.style.height= arr[current + 1] + "px";
-    div.style.backgroundColor = "#f22929";
+    div.style.width = this.divWidth + "px";
+    div.style.height= insertArr[right] + "px";
+    div.style.backgroundColor = "#6769bf";
     div.style.color = "white";
     div.className = "arrayDiv";
-    div.id = current;
+    div.id = right;
     document.getElementById("main").appendChild(div);
     try {
-        for(i = done ; i < mergeSorted.length; i++) {
+        for(var f = right ; f < insertArr.length; f++) {
             var div = document.createElement("div");
-            div.style.width = divWidth + "px";
-            div.style.height= arr[i] + "px";
+            div.style.width = this.divWidth + "px";
+            div.style.height= insertArr[f] + "px"; //If there is a bug it's probably here :)
             div.style.backgroundColor = "#303a42";
             div.style.color = "white";
             div.className = "arrayDiv";
-            div.id = i;
+            div.id = f;
             document.getElementById("main").appendChild(div);
         }
     } catch(err) {
@@ -308,6 +420,11 @@ function drawMergeSort(mergeSorted, current) {
     }
 }
 
-function logMerge() {
-    console.log(mergeSort(arr));
+function insertionResolve(insSorted, left, right) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        drawInsertionSort(insSorted, left, right);
+        resolve('resolved');
+      }, (1 / this.speed) * 1000);
+    });
 }

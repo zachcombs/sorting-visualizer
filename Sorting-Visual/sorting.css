@@ -6,8 +6,11 @@ body {
 .header {
     padding: 10px;
     text-align: left;
-    background: #121a2b;
+    background: #2e2e2e;
     color: white;
+    outline-color: black;
+    outline-width: 2px;
+    outline-style: solid;
     font-size: 15px;
 }
 
@@ -91,5 +94,13 @@ body {
     text-align: center;
     display: inline-block;
     top: 48px;
-    overflow: hidden;
   }
+
+  .createdBy {
+    position: fixed;
+    width: 100%;
+    text-align: center;
+    bottom: 0;
+    color: #9fa1a0;
+  }
+
