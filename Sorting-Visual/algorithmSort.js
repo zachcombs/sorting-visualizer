@@ -8,7 +8,7 @@ function arraySize() {
     var spaceOffset;
     document.getElementById("myRange").setAttribute("max", $(window).width() / 2);
     var x = document.getElementById("myRange").value;
-    arr = Array.from({length: x}, () => Math.floor(Math.random() * $(window).height() * 0.25));
+    arr = Array.from({length: x}, () => Math.floor(Math.random() * $(window).height() * 0.7));
     var arraySize = arr.length;
     this.divWidth = ($(window).width() * 0.99) / x;
     unsortedArray = arr;
