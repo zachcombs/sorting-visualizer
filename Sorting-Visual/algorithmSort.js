@@ -11,18 +11,7 @@ function arraySize() {
     var arraySize = arr.length;
     this.divWidth = ($(window).width() * 0.99) / x;
     unsortedArray = arr;
-    // if(arr.length -1 < 10) {
-    //     spaceOffset = 3;
-    // } else if(arr.length -1 < 99) {
-    //     spaceOffset = 2;
-    // } else if(arr.length -1 < 999) {
-    //     spaceOffset = 1;
-    // } else {
-    //     spaceOffset = 0;
-    // }
-    // for(var g = 0; g < spaceOffset; g++) {
-    //     arraySize = arraySize + "     ";
-    // }
+    document.getElementById("main").style.top = ($("#header").height());
     document.getElementById("arrayCounter").textContent = arraySize;
     drawDiv(arr, '#303a42', this.divWidth);
 }
