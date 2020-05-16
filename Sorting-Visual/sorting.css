@@ -30,6 +30,22 @@ body {
   outline: none;
 }
 
+.clearButton {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  border: none;
+  color: rgb(255, 255, 255);
+  padding: 5px 8px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 2px 1px;
+  cursor: pointer;
+  outline: none;
+}
+
 .arraySize {
   margin: auto;
   margin-left: 10px;
@@ -62,19 +78,19 @@ body {
   
 /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
 .slider::-webkit-slider-thumb {
-  -webkit-appearance: none; /* Override default look */
+  -webkit-appearance: none;
   appearance: none;
-  width: 25px; /* Set a specific slider handle width */
-  height: 25px; /* Slider handle height */
-  background: rgb(255, 255, 255); /* Green background */
-  cursor: pointer; /* Cursor on hover */
+  width: 25px;
+  height: 25px;
+  background: rgb(255, 255, 255);
+  cursor: pointer;
 }
   
 .slider::-moz-range-thumb {
-  width: 25px; /* Set a specific slider handle width */
-  height: 25px; /* Slider handle height */
-  background: rgb(255, 255, 255); /* Green background */
-  cursor: pointer; /* Cursor on hover */
+  width: 25px;
+  height: 25px;
+  background: rgb(255, 255, 255);
+  cursor: pointer;
 }
 
 .arrayDiv {
@@ -102,6 +118,6 @@ body {
   width: 100%;
   text-align: center;
   bottom: 0;
-  color: #9fa1a0;
+  color: #000000;
 }
 

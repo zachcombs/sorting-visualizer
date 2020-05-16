@@ -7,22 +7,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<body>
-  
+<body style = "background-color: #d8cfd0;">
   <div class = "header">
-    <button class = "button" onclick="quickSort()">Quick Sort</button>
-    <button class = "button" onclick = "bubbleSort()">Bubble Sort</button>
-    <button class = "button" onclick = "selectionSort()">Selection Sort</button>
-    <button class = "button"onclick = "insertionSort()">Insertion Sort</button>
-    <button class = "button" onclick = "mergeSort()">Merge Sort</button>
+    <button id = "sortbutton" class = "button" onclick="quickSortButton()">Quick Sort</button>
+    <button id = "sortbutton" class = "button" onclick = "bubbleSortButton()">Bubble Sort</button>
+    <button id = "sortbutton" class = "button" onclick = "selectionSortButton()">Selection Sort</button>
+    <button id = "sortbutton" class = "button" onclick = "insertionSortButton()">Insertion Sort</button>
+    <button id = "sortbutton" class = "button" onclick = "mergeSortButton()">Merge Sort</button>
+    <p class = "arraySize">|</p>
+    <button class = "clearButton" onclick = "clearPage()">Reset</button>
     <p class = "arraySize">|</p>
     <p class = "arraySize">Array Size</p>
-    <input type="range" min="2" max="1000" value="2" class="slider" id="myRange" oninput="arraySize()">
+    <input type="range" min="2" max="1000" value="2" class="slider asyncSlider" id="myRange" oninput="arraySize()">
     <p class = "arraySize" id = 'arrayCounter'></p>
     <p class = "arraySize">|</p>
     <p class = "arraySize">Sorting Speed</p>
-    <input type="range" min="1" max="50" value="2" class="slider" id="mySpeed" oninput = "sortingSpeed()">
-    <p class = "arraySize" id = "speedCounter"></p>
+    <input type="range" min="1" max="50" value="1" class="slider" id="mySpeed" oninput = "sortingSpeed()">
+    <p class = "arraySize" id = "speedCounter">1x</p>
     </div>
   </div>
   <div class = "content" id = "main">

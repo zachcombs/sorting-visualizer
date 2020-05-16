@@ -6,6 +6,7 @@ var unsortedArray;
 
 function arraySize() {
     var spaceOffset;
+    document.getElementById("myRange").setAttribute("max", $(window).width() / 2);
     var x = document.getElementById("myRange").value;
     arr = Array.from({length: x}, () => Math.floor(Math.random() * $(window).height() * 0.85));
     var arraySize = arr.length;
@@ -14,6 +15,24 @@ function arraySize() {
     document.getElementById("main").style.top = ($("#header").height());
     document.getElementById("arrayCounter").textContent = arraySize;
     drawDiv(arr, '#303a42', this.divWidth);
+}
+
+function clearPage() {
+    location.reload();
+}
+
+function enableButtons() {
+    $(".button").css({"color": "white"});
+    document.getElementById("myRange").style.backgroundColor = "white";
+    $(".asyncSlider").removeAttr("disabled");
+    $(".button").removeAttr("disabled");
+}
+
+function disableButtons() {
+    $(".button").attr("disabled", "disabled");
+    $(".asyncSlider").attr("disabled", "disabled");
+    document.getElementById("myRange").style.backgroundColor = "#6e6e6e";
+    $(".button").css({"color": "#6e6e6e"});
 }
 
 function sortingSpeed() {
@@ -93,12 +112,18 @@ async function drawDivVisualizer(divArr, current, smallest, divwidth) {
     }
 }
 
+//SELECTION SORT CODE STARTS HERE
+async function selectionSortButton() {
+    disableButtons();
+    selectionSort();
+}
+
 async function selectionSort() {
     var sorted = arr;
     var current;
     var smallest;
     var temp;
-
+    
     for(var a = 0; a < sorted.length - 1; a++) {
         smallest = a;
         current = smallest;
@@ -114,6 +139,7 @@ async function selectionSort() {
         const result = await resolveAfter2SecondsSelection();
     }
     drawDiv(sorted, "#098f35", divWidth);
+    enableButtons();
 }
 
 function resolveAfter2SecondsSelection(sorted, current, smallest, divWidth) {
@@ -123,6 +149,13 @@ function resolveAfter2SecondsSelection(sorted, current, smallest, divWidth) {
         resolve('resolved');
       }, (1 / this.speed) * 1000);
     });
+}
+//SELECTION SORT CODE STOPS HERE
+
+//BUBBLE SORT CODE STARTS HERE
+async function bubbleSortButton() {
+    disableButtons();
+    bubbleSort();
 }
 
 async function bubbleSort() {
@@ -143,9 +176,9 @@ async function bubbleSort() {
             }
         }
     }
+    enableButtons();
     drawDiv(sorted, "#098f35", divWidth);
 }
-
 
 async function drawBubbleSort(bubSorted, current, done, divWidth) {
     $("div.arrayDiv").remove();
@@ -214,8 +247,13 @@ function resolveAfter2SecondsBubble(bubSorted, current, smallest, divWidth) {
       }, (1 / this.speed) * 100);
     });
 }
+//BUBBLE SORT CODE STOPS HERE
 
-//Merge code pulled from https://medium.com/techtrument/implementing-merge-sort-in-javascript-898d5f54a234
+//MERGE SORT CODE STARTS HERE
+async function mergeSortButton() {
+    disableButtons();
+    mergeSort();
+}
 
 function merge(leftArr, rightArr) {
     var temp;
@@ -339,8 +377,13 @@ function drawMergeSort(sortedArr, left, right) {
         }
    }
 }
+//MERGE SORT CODE ENDS HERE
 
-//INSERTION SORT STARTS HERE
+//INSERTION SORT CODE STARTS HERE
+async function insertionSortButton() {
+    disableButtons();
+    bubbleSort();
+}
 
 async function insertionSort() {
     var insertionSorted = arr;
@@ -359,6 +402,7 @@ async function insertionSort() {
             insertCurr--;
         }
     }
+    enableButtons();
     drawDiv(insertionSorted, "#098f35", divWidth);
 }
 
@@ -417,3 +461,19 @@ function insertionResolve(insSorted, left, right) {
       }, (1 / this.speed) * 1000);
     });
 }
+//INSERTION SORT CODE ENDS HERE
+
+//QUICK SORT CODE STARTS HERE
+async function quickSortButton() {
+    disableButtons();
+    quickSort();
+}
+
+async function quickSort() {
+
+}
+
+async function quickResolve() {
+
+}
+//QUICK SORT CODE ENDS HERE
