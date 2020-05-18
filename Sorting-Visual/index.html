@@ -9,12 +9,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <body style = "background-color: #d8cfd0;">
   <div class = "header">
-    <button id = "sortbutton" class = "button" onclick="quickSortButton()">Quick Sort</button>
     <button id = "sortbutton" class = "button" onclick = "bubbleSortButton()">Bubble Sort</button>
     <button id = "sortbutton" class = "button" onclick = "selectionSortButton()">Selection Sort</button>
     <button id = "sortbutton" class = "button" onclick = "insertionSortButton()">Insertion Sort</button>
-    <button id = "sortbutton" class = "button" onclick = "//mergeSortButton()">Merge Sort</button>
+    <button id = "sortbutton" class = "button" onclick = "mergeSortButton()">Merge Sort</button>
     <p class = "arraySize">|</p>
+    <button class = "pauseButton" onclick = "pausePage()">Pause</button>
+    <button class = "playButton" onclick = "playPage()" disabled = "disabled">Resume</button>
     <button class = "clearButton" onclick = "clearPage()">Reset</button>
     <p class = "arraySize">|</p>
     <p class = "arraySize">Array Size</p>
@@ -22,7 +23,7 @@
     <p class = "arraySize" id = 'arrayCounter'></p>
     <p class = "arraySize">|</p>
     <p class = "arraySize">Sorting Speed</p>
-    <input type="range" min="1" max="50" value="1" class="slider" id="mySpeed" oninput = "sortingSpeed()">
+    <input type="range" min="1" max="50" value="1" class="slider asyncSliderPause" id="mySpeed" oninput = "sortingSpeed()">
     <p class = "arraySize" id = "speedCounter">1x</p>
     </div>
   </div>

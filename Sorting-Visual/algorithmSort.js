@@ -3,14 +3,15 @@ var speed = document.getElementById("mySpeed").value;
 var divWidth;
 var sorted = [];
 var unsortedArray;
+var paused = false;
+var pauseVar;
 
 function arraySize() {
-    var spaceOffset;
     document.getElementById("myRange").setAttribute("max", Math.floor($(window).width() / 4));
     var x = document.getElementById("myRange").value;
-    arr = Array.from({length: x}, () => Math.floor(Math.random() * $(window).height() * 0.7));
+    arr = Array.from({length: x}, () => Math.floor(Math.random() * $(window).height() * 0.7) + 1);
     var arraySize = arr.length;
-    this.divWidth = ($(window).width() * 0.99) / x;
+    this.divWidth = $(window).width() / x;
     unsortedArray = arr;
     document.getElementById("main").style.top = ($("#header").height());
     document.getElementById("arrayCounter").textContent = arraySize;
@@ -23,7 +24,7 @@ function clearPage() {
 
 function enableButtons() {
     $(".button").css({"color": "white"});
-    document.getElementById("myRange").style.backgroundColor = "white";
+    document.getElementById("myRange").style.backgroundColor = "#d3d3d3";
     $(".asyncSlider").removeAttr("disabled");
     $(".button").removeAttr("disabled");
 }
@@ -31,13 +32,34 @@ function enableButtons() {
 function disableButtons() {
     $(".button").attr("disabled", "disabled");
     $(".asyncSlider").attr("disabled", "disabled");
-    document.getElementById("myRange").style.backgroundColor = "#6e6e6e";
-    $(".button").css({"color": "#6e6e6e"});
+    document.getElementById("myRange").style.backgroundColor = "#595959";
+    $(".button").css({"color": "#595959"});
 }
 
 function sortingSpeed() {
     speed = document.getElementById("mySpeed").value;
     document.getElementById("speedCounter").textContent = speed.toString() + "x";
+}
+
+function pausePage() {
+    speed = 0.1;
+    $(".pauseButton").attr("disabled", "disabled");
+    $(".pauseButton").css({"color": "#595959"});
+    $(".playButton").removeAttr("disabled");
+    $(".playButton").css({"color": "white"});
+    $(".asyncSliderPause").attr("disabled", "disabled");
+    document.getElementById("mySpeed").style.backgroundColor = "#595959";
+}
+
+function playPage() {
+    speed = document.getElementById("mySpeed").value;
+    clearTimeout(pauseVar);
+    $(".playButton").attr("disabled", "disabled");
+    $(".playButton").css({"color": "#595959"});
+    $(".pauseButton").removeAttr("disabled");
+    $(".pauseButton").css({"color": "white"});
+    $(".asyncSliderPause").removeAttr("disabled");
+    document.getElementById("mySpeed").style.backgroundColor = "#d3d3d3";
 }
 
 function drawDiv(divArr, color, divwidth) {
@@ -144,7 +166,7 @@ async function selectionSort() {
 
 function resolveAfter2SecondsSelection(sorted, current, smallest, divWidth) {
     return new Promise(resolve => {
-      setTimeout(() => {
+      pausedVar = setTimeout(() => {
         drawDivVisualizer(sorted, current, smallest, divWidth);
         resolve('resolved');
       }, (1 / this.speed) * 1000);
@@ -250,11 +272,10 @@ function resolveAfter2SecondsBubble(bubSorted, current, smallest, divWidth) {
 //BUBBLE SORT CODE STOPS HERE
 
 //MERGE SORT CODE STARTS HERE
-async function mergeSortButton() {
-    console.log(arr);
+function mergeSortButton() {
     disableButtons();
     mergeSort();
-    console.log(arr);
+    drawDiv(arr, "#098f35", divWidth);
 }
 
 function merge(leftArr, rightArr) {
@@ -276,33 +297,28 @@ function merge(leftArr, rightArr) {
     //THIS IS VERY INEFFICIENT DO NOT REPLICATE
     for(var i = 0; i < sortedArr.length - 1; i++) {
         for(var j = 0; j < sortedArr.length; j++) {
-            if(sortedArr[i] >= sortedArr[j]) {
-                /*
-                temp = this.arr.find(element => (element >= sortedArr[i] && element <= sortedArr[i]));
-                console.log(temp)
-                this.arr[this.arr.findIndex(element => (element >= sortedArr[i] && element <= sortedArr[i]))] = this.arr.find(element => (element >= sortedArr[i] && element <= sortedArr[i]));
-                this.arr[this.arr.findIndex(element => (element >= sortedArr[i] && element <= sortedArr[j]))] = temp;
-                */
-               for (var h = 0; h < arr.length; h++) {
-                   if(arr[h] == sortedArr[i]) {
-                       for(var d = 0; d < arr.length; d++) {
-                           if(arr[d] == sortedArr[j]) {
-                               var temp = arr[d];
-                               arr[d] = arr[h];
-                               arr[h] = temp;
-                               continue;
-                           }
-                       }
+            if(sortedArr[i] <= sortedArr[j]) {
+                for (var h = 0; h < arr.length; h++) {
+                    if(arr[h] == sortedArr[i]) {
+                        for(var d = 0; d < arr.length; d++) {
+                            if(arr[d] == sortedArr[j]) { //h is the right number
+                                var temp = arr[d];
+                                arr[d] = arr[h];
+                                arr[h] = temp;
+                                console.log(arr);
+                                setTimeout(drawMergeSort(d, h), (1 / this.speed) * 1000);
+                                continue;
+                            }
+                        }
                        continue;
-                   }
-               }
+                    }
+                }
             continue;
             }
         }
     continue;
     }
-    //console.log(arr);
-    //console.log('-------------------');
+    console.log(arr);
     enableButtons();
     return sortedArr;
 }
@@ -315,27 +331,22 @@ function mergeSort(mergeArr) {
         return mergeArr; }
     else {
         var midpoint = parseInt(mergeArr.length / 2);
-        console.log(mergeArr[midpoint]);
         var leftArr   = mergeArr.slice(0, midpoint);
-        var rightArr  = mergeArr.slice(midpoint, mergeArr.length);
-        //console.log("COMBINE: " + leftArr +" | " + rightArr);
-        //drawMergeSort(mergeArr);
-        //const result = await resolveMerge();
+        var rightArr = mergeArr.slice(midpoint, mergeArr.length);
         return merge(mergeSort(leftArr), mergeSort(rightArr));
     }
 }
 
-function resolveMerge(sortedArr, current) {
+function resolveMerge(l, r) {
     return new Promise((resolve) => {
       setTimeout(() => {
-        //drawMergeSort(sortedArr, current);
+        drawMergeSort(l, r);
         resolve('resolved');
-      }, (1 / this.speed) * 100);
+      }, (1 / this.speed) * 1000);
     });
 }
 
-function drawMergeSort(sortedArr, left, right) {
-    var temp;
+function drawMergeSort(left, right) {
     /*
     249,267,85,99,93,63,211,23,334,4,292,265
     85,267
@@ -386,15 +397,46 @@ function drawMergeSort(sortedArr, left, right) {
     
     */
     $("div.arrayDiv").remove();
-    for(var i = 0; i < sortedArr.length - 1; i++) {
-        for(var j = 0; j < sortedArr.length; j++) {
-            if(sortedArr[i] >= sortedArr[j]) {
-                temp = arr.find(sortedArr[i]);
-                arr[arr.findIndex(sortedArr[i])] = arr.find(sortedArr[j]);
-                arr[arr.findIndex(sortedArr[j])] = temp;
-            }
-        }
-   }
+    //Before left
+    for(var i = 0; i < left; i++) {
+        var div = document.createElement("div");
+        div.style.width = this.divWidth + "px";
+        div.style.height= arr[i] + "px";
+        div.style.backgroundColor = "#098f35";
+        div.style.color = "white";
+        div.className = "arrayDiv";
+        div.id = i.toString();
+        document.getElementById("main").appendChild(div);
+    }
+    //Left
+    var div = document.createElement("div");
+    div.style.width = this.divWidth + "px";
+    div.style.height= arr[left] + "px";
+    div.style.backgroundColor = "#6769bf";
+    div.style.color = "white";
+    div.className = "arrayDiv";
+    div.id = left;
+    document.getElementById("main").appendChild(div);
+    //Right
+    var div = document.createElement("div");
+    div.style.width = this.divWidth + "px";
+    div.style.height= arr[right] + "px";
+    div.style.backgroundColor = "#6769bf";
+    div.style.color = "white";
+    div.className = "arrayDiv";
+    div.id = right;
+    document.getElementById("main").appendChild(div);
+    //After right
+    for(var x = right + 1; x < arr.length; x++) {
+        var div = document.createElement("div");
+        div.style.width = this.divWidth + "px";
+        div.style.height= arr[x] + "px";
+        div.style.backgroundColor = "#098f35";
+        div.style.color = "white";
+        div.className = "arrayDiv";
+        div.id = x.toString();
+        document.getElementById("main").appendChild(div);
+    }
 }
 //MERGE SORT CODE ENDS HERE
 
@@ -481,58 +523,3 @@ function insertionResolve(insSorted, left, right) {
     });
 }
 //INSERTION SORT CODE ENDS HERE
-
-//QUICK SORT CODE STARTS HERE
-async function quickSortButton() {
-    disableButtons();
-    console.log(arr);
-    quickSort(arr, 0, arr.length - 1);
-}
-
-function partition(items, left, right) {
-    var pivot   = items[Math.floor((right + left) / 2)];
-    i = left;
-    j = right;
-    while (i <= j) {
-        while (items[i] < pivot) {
-            i++;
-        }
-        while (items[j] > pivot) {
-            j--;
-        }
-        if (i <= j) {
-            swap(items, i, j);
-            i++;
-            j--;
-        }
-    }
-    return i;
-}
-
-function quickSort(items, left, right) {
-    var index;
-    if (items.length > 1) {
-        index = partition(items, left, right);
-        console.log('INDEX:' + index);
-        if (left < index - 1) {
-            console.log(items);
-            quickSort(items, left, index - 1);
-        }
-        if (index < right) {
-            console.log(items);
-            quickSort(items, index, right);
-        }
-    }
-    return items;
-}
-
-async function quickResolve() {
-
-}
-//QUICK SORT CODE ENDS HERE
-
-function swap(items, leftIndex, rightIndex) {
-    var temp = items[leftIndex];
-    items[leftIndex] = items[rightIndex];
-    items[rightIndex] = temp;
-}

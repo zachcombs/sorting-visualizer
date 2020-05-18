@@ -46,6 +46,38 @@ body {
   outline: none;
 }
 
+.pauseButton {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  border: none;
+  color: rgb(255, 255, 255);
+  padding: 5px 8px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 2px 1px;
+  cursor: pointer;
+  outline: none;
+}
+
+.playButton {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  border: none;
+  color: #595959;
+  padding: 5px 8px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 2px 1px;
+  cursor: pointer;
+  outline: none;
+}
+
 .arraySize {
   margin: auto;
   margin-left: 10px;
@@ -107,18 +139,19 @@ body {
   outline-style: solid;
   outline-width: 1px;
   outline-color: black;
-  outline-offset: -1px;
+  outline-offset: 0px;
   display: inline-block;
   text-align: center;
+  vertical-align: top;
+  transform: rotateX(180deg);
 }
 
 .content {
-  position: absolute;
+  margin-top: auto;
   margin-left: auto;
   margin-right: auto;
-  transform: rotateX(180deg);
   text-align: center;
-  display: inline-block;
+  float: center;
   clear: both;
 }
 
@@ -127,6 +160,6 @@ body {
   width: 100%;
   text-align: center;
   bottom: 0;
-  color: #000000;
+  color: #4b4b4b;
 }
 
